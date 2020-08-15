@@ -22,6 +22,15 @@ namespace City.Chain.Proxy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                    });
+            });
+
             services.AddControllers();
 
             services.AddProxies();
@@ -70,6 +79,8 @@ namespace City.Chain.Proxy
             }
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseSwagger(c =>
             {
